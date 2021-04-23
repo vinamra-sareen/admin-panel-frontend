@@ -1,6 +1,6 @@
 import logo from "../assets/logo.png";
-import charity from "../assets/charity-box.png";
 import React from "react";
+import charity from "../assets/charity-box.png";
 import { Ripple } from "@progress/kendo-react-ripple";
 
 import {
@@ -17,54 +17,60 @@ const Header = () => {
   return (
     <React.Fragment>
       <AppBar>
-        {/* <AppBarSection>
-          <button className="k-button k-button-clear">
-            <span className="k-icon k-i-menu" />
-          </button>
-        </AppBarSection> */}
+        <div className="flex sm:hidden">
+          <AppBarSection>
+            <button className="k-button">
+              <span className="k-icon k-i-menu" />
+            </button>
+          </AppBarSection>
+        </div>
 
         <AppBarSpacer style={{ width: 4 }} />
 
         <AppBarSection>
-          <img src={logo} width="150" height="70" alt="logo" />
+          <img src={logo} width="150" height="70" alt="charitable-logo" />
         </AppBarSection>
 
         <AppBarSpacer style={{ width: 32 }} />
 
-        <AppBarSection>
-          <ul>
-            <li>
-              <span>Home</span>
-            </li>
-            <li>
-              <span>Donations</span>
-            </li>
-            <li>
-              <span>Contact Us</span>
-            </li>
-          </ul>
-        </AppBarSection>
+        <div className="hidden sm:flex">
+          <AppBarSection>
+            <ul>
+              <li>
+                <span>Home</span>
+              </li>
+              <li>
+                <span>Donations</span>
+              </li>
+              <li>
+                <span>Contact Us</span>
+              </li>
+            </ul>
+          </AppBarSection>
+        </div>
 
         <AppBarSpacer />
 
-        <AppBarSection className="actions">
-          <Ripple>
-            <button className="k-button">
-              <img src={charity} width="24" height="24" alt="fundraiser" />
-              Start a fundraiser
-            </button>
-          </Ripple>
-        </AppBarSection>
+        <div className="hidden sm:flex">
+          <AppBarSection className="actions">
+            <Ripple>
+              <button className="k-button">
+                <img src={charity} width="24" height="24" alt="fundraiser" />
+                Start a fundraiser
+              </button>
+            </Ripple>
+          </AppBarSection>
 
-        <AppBarSection>
-          <span className="k-appbar-separator" />
-        </AppBarSection>
+          <AppBarSection>
+            <span className="k-appbar-separator" />
+          </AppBarSection>
 
-        <AppBarSection>
-          <Avatar shape="circle" type="image">
-            <img src={kendokaAvatar} />
-          </Avatar>
-        </AppBarSection>
+          <AppBarSection>
+            <Avatar shape="circle" type="image">
+              <img src={kendokaAvatar} alt="kendo-avatar" />
+            </Avatar>
+          </AppBarSection>
+        </div>
       </AppBar>
       <style>{`
                 body {
