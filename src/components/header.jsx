@@ -54,7 +54,7 @@ const Header = () => {
         <div className="hidden sm:flex">
           <AppBarSection className="actions">
             <Ripple>
-              <button className="k-button">
+              <button className="k-button text-base font-semibold px-6 py-2 rounded-lg">
                 <img src={charity} width="24" height="24" alt="fundraiser" />
                 Start a fundraiser
               </button>

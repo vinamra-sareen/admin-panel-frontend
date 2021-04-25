@@ -16,7 +16,7 @@ const IntroBody = () => {
             <div className="m-8 sm:m-12">
               <span className="text-xl sm:text-2xl md:text-2xl lg:text-4xl ">
                 Charitable{" "}
-                <span className="text-sm sm:text-sm md:text-base lg:text-xl">
+                <span className="text-sm text-charity sm:text-sm md:text-base lg:text-xl">
                   Crowdfunding
                 </span>
               </span>
@@ -26,24 +26,24 @@ const IntroBody = () => {
               </span>
               <br />
               <Ripple>
-                <button className="k-button">
+                <button className="k-button text-base font-semibold px-6 py-2 rounded-lg">
                   <img src={charity} width="24" height="24" alt="fundraiser" />
                   Start a fundraiser - Its's free
                 </button>
               </Ripple>
               <br />
               <div className="flex mt-10 text-center">
-                <div className="border-r-2 border-fuchsia-600 flex-grow sm:w-40 flex-none">
+                <div className="border-r-2 border-gray-200 flex-grow sm:w-40 sm:flex-none">
                   <span className="font-medium text-3xl sm:text-5xl">0</span>
                   <br />
                   <span>Fundraisers</span>
                 </div>
-                <div className="border-r-2 border-fuchsia-600 flex-grow sm:w-40 flex-none">
+                <div className="border-r-2 border-gray-200 flex-grow sm:w-40 sm:flex-none">
                   <span className="font-medium text-3xl sm:text-5xl">0</span>
                   <br />
                   <span>Raised</span>
                 </div>
-                <div className="flex-grow sm:w-40 flex-none">
+                <div className="flex-grow sm:w-40 sm:flex-none">
                   <span className="font-medium text-3xl sm:text-5xl">0</span>
                   <br />
                   <span>Donations</span>
