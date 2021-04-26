@@ -2,30 +2,69 @@ import logo from "../assets/logo.png";
 import React from "react";
 import charity from "../assets/charity-box.png";
 import { Ripple } from "@progress/kendo-react-ripple";
-
+import { Link } from "react-router-dom";
 import {
   AppBar,
   AppBarSection,
   AppBarSpacer,
   Avatar,
+  Drawer,
+  DrawerContent,
 } from "@progress/kendo-react-layout";
 
 let kendokaAvatar =
   "https://www.telerik.com/kendo-react-ui-develop/images/kendoka-react.png";
 
+const items = [
+  { text: "Home", icon: "k-i-home", selected: true },
+  { separator: true },
+  { text: "Donate", icon: "k-i-heart-outline" },
+  { text: "About Us", icon: "k-i-globe" },
+  { separator: true },
+  { text: "Login", icon: "k-i-lock" },
+  { text: "Register", icon: "k-i-user" },
+];
+
 const Header = () => {
+  const [expanded, setExpanded] = React.useState(false);
+  const [selectedId, setSelectedId] = React.useState(
+    items.findIndex((x) => x.selected === true)
+  );
+  const handleClick = () => {
+    setExpanded((prevState) => !prevState);
+  };
+
+  const handleSelect = (ev) => {
+    setSelectedId(ev.itemIndex);
+    setExpanded(false);
+  };
+
   return (
     <React.Fragment>
       <AppBar>
-        <div className="flex sm:hidden">
-          <AppBarSection>
-            <button className="k-button">
-              <span className="k-icon k-i-menu" />
-            </button>
-          </AppBarSection>
-        </div>
-
         <AppBarSpacer style={{ width: 4 }} />
+        <Drawer
+          expanded={expanded}
+          position={"start"}
+          mode="overlay"
+          animation={{ duration: 400 }}
+          items={items.map((item, index) => ({
+            ...item,
+            selected: index === selectedId,
+          }))}
+          onOverlayClick={handleClick}
+          onSelect={handleSelect}
+        >
+          <DrawerContent>
+            <div className="flex sm:hidden">
+              <AppBarSection>
+                <button className="k-button" onClick={handleClick}>
+                  <span className="k-icon k-i-menu" />
+                </button>
+              </AppBarSection>
+            </div>
+          </DrawerContent>
+        </Drawer>
 
         <AppBarSection>
           <img src={logo} width="150" height="70" alt="charitable-logo" />
@@ -37,13 +76,19 @@ const Header = () => {
           <AppBarSection>
             <ul>
               <li>
-                <span>Home</span>
+                <Link to="/">Home</Link>
               </li>
               <li>
-                <span>Donations</span>
+                <Link to="/donate">Donate</Link>
               </li>
               <li>
-                <span>Contact Us</span>
+                <Link to="/about">Contact Us</Link>
+              </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
               </li>
             </ul>
           </AppBarSection>
@@ -66,9 +111,11 @@ const Header = () => {
           </AppBarSection>
 
           <AppBarSection>
-            <Avatar shape="circle" type="image">
-              <img src={kendokaAvatar} alt="kendo-avatar" />
-            </Avatar>
+            <Link to="/profile">
+              <Avatar shape="circle" type="image">
+                <img src={kendokaAvatar} alt="kendo-avatar" />
+              </Avatar>
+            </Link>
           </AppBarSection>
         </div>
       </AppBar>

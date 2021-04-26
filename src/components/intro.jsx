@@ -1,6 +1,6 @@
 import React from "react";
-import help from "../../assets/help.jpg";
-import charity from "../../assets/charity-box.png";
+import help from "../assets/help.jpg";
+import charity from "../assets/charity-box.png";
 import { Ripple } from "@progress/kendo-react-ripple";
 
 const IntroSection = () => {

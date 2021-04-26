@@ -18,8 +18,8 @@ class ArcGaugeComponent extends React.Component {
 
   render() {
     const colors = [
-      { from: 0, to: 30, color: "red" },
-      { from: 30, to: 100, color: "green" },
+      { from: 0, to: 40, color: "red" },
+      { from: 40, to: 100, color: "green" },
     ];
 
     const arcOptions = {

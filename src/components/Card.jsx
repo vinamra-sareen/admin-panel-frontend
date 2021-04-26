@@ -17,40 +17,44 @@ const EventCard = ({ card }) => {
           className="h-32 sm:h-48 min-w-full max-w-full"
         />
       </CardHeader>
-      <CardTitle className="px-4 text-left">{card.headerTitle}</CardTitle>
 
       <CardBody>
-        <div className="w-full flex">
-          <div className="w-3/6">
-            <ArcGaugeComponent />
-            <span className="text-base font-semibold text-blueGray-900">
-              $40,000
-            </span>
-            <br />
-            <span className="text-sm font-normal">Raised</span>
-          </div>
-          <div className="w-3/6 text-left">
-            <span className="ml-4 text-xs sm:text-sm">Created By:</span>
-            <br />
-            <span className="ml-4 text-sm sm:text-base">Vinamra Sareen</span>
-            <div>
-              <CardActions>
-                <button className="k-button k-flat">
-                  <span
-                    className={
-                      card.postLiked
-                        ? "k-icon k-i-heart"
-                        : "k-icon k-i-heart-outline"
-                    }
-                  />
-                </button>
-                <button className="k-button k-flat">
-                  <span className="k-icon k-i-comment" />
-                </button>
-                <button className="k-button k-flat">
-                  <span className="k-icon k-i-share" />
-                </button>
-              </CardActions>
+        <div className="w-full">
+          <span className="text-base sm:text-xl font-bold">
+            {card.headerTitle &&
+              (card.headerTitle.length > 10
+                ? card.headerTitle.substring(0, 25) + " ..."
+                : card.headerTitle)}
+          </span>
+          <div className="mt-8 w-full flex">
+            <div className="w-3/6">
+              <ArcGaugeComponent />
+              <span className="text-sm sm:text-base font-semibold text-blueGray-900">
+                $40,000
+              </span>
+              <br />
+              <span className="text-xs sm:text-sm font-normal">Raised</span>
+            </div>
+            <div className="w-3/6 text-left">
+              <span className="ml-4 text-xs sm:text-sm">Created By:</span>
+              <br />
+              <span className="ml-4 text-sm sm:text-base">Vinamra Sareen</span>
+              <div>
+                <CardActions>
+                  <button className="k-button k-flat">
+                    <img
+                      src="https://img.icons8.com/dusk/64/26e07f/donate.png"
+                      className="w-8 sm:w-10"
+                    />
+                  </button>
+                  <button className="k-button k-flat">
+                    <img
+                      src="https://img.icons8.com/android/24/000000/more.png"
+                      className="w-4 sm:w-6"
+                    />
+                  </button>
+                </CardActions>
+              </div>
             </div>
           </div>
         </div>
