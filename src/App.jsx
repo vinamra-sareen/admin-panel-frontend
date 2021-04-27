@@ -5,8 +5,12 @@ import Header from "./components/header.jsx";
 import Home from "./pages/home";
 import About from "./pages/about";
 import Login from "./pages/login";
-import Profile from "./pages/profile";
 import Register from "./pages/register";
+import CreateFundraiser from "./pages/fundraiser";
+import Dashboard from "./pages/dashboard";
+import Profile from "./pages/dashboard/profile";
+import Settings from "./pages/dashboard/settings";
+import Events from "./pages/dashboard/events";
 
 const App = () => {
   return (
@@ -14,20 +18,19 @@ const App = () => {
       <Router>
         <Header />
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/profile">
-            <Profile />
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/create-fundraiser" component={CreateFundraiser} />
+          <Route path="/dashboard">
+            <Dashboard>
+              <Switch>
+                <Route path="/dashboard/profile" component={Profile} />
+                <Route path="/dashboard/events" component={Events} />
+                <Route path="/dashboard/settings" component={Settings} />
+              </Switch>
+            </Dashboard>
           </Route>
         </Switch>
 

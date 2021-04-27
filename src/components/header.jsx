@@ -90,6 +90,9 @@ const Header = () => {
               <li>
                 <Link to="/register">Register</Link>
               </li>
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
             </ul>
           </AppBarSection>
         </div>
@@ -110,13 +113,13 @@ const Header = () => {
             <span className="k-appbar-separator" />
           </AppBarSection>
 
-          <AppBarSection>
+          {/* <AppBarSection>
             <Link to="/profile">
               <Avatar shape="circle" type="image">
                 <img src={kendokaAvatar} alt="kendo-avatar" />
               </Avatar>
             </Link>
-          </AppBarSection>
+          </AppBarSection> */}
         </div>
       </AppBar>
       <style>{`

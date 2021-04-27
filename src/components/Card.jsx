@@ -1,7 +1,6 @@
 import {
   Card,
   CardHeader,
-  CardTitle,
   CardBody,
   CardActions,
   CardImage,
@@ -14,7 +13,7 @@ const EventCard = ({ card }) => {
       <CardHeader className="k-hbox bg-transparent" style={{ padding: "0" }}>
         <CardImage
           src={card.url}
-          className="h-32 sm:h-48 min-w-full max-w-full"
+          className="h-32 sm:h-44 min-w-full max-w-full"
         />
       </CardHeader>
 
@@ -36,7 +35,7 @@ const EventCard = ({ card }) => {
               <span className="text-xs sm:text-sm font-normal">Raised</span>
             </div>
             <div className="w-3/6 text-left">
-              <span className="ml-4 text-xs sm:text-sm">Created By:</span>
+              <span className="ml-4 text-xs sm:text-sm">Created By</span>
               <br />
               <span className="ml-4 text-sm sm:text-base">Vinamra Sareen</span>
               <div>

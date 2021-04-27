@@ -2,6 +2,7 @@ import React from "react";
 import help from "../assets/help.jpg";
 import charity from "../assets/charity-box.png";
 import { Ripple } from "@progress/kendo-react-ripple";
+import { Link } from "react-router-dom";
 
 const IntroSection = () => {
   return <IntroBody />;
@@ -26,10 +27,17 @@ const IntroBody = () => {
               </span>
               <br />
               <Ripple>
-                <button className="k-button text-base font-semibold px-6 py-2 rounded-lg">
-                  <img src={charity} width="24" height="24" alt="fundraiser" />
-                  Start a fundraiser - Its's free
-                </button>
+                <Link to="/create-fundraiser">
+                  <button className="k-button text-base font-semibold px-6 py-2 rounded-lg">
+                    <img
+                      src={charity}
+                      width="24"
+                      height="24"
+                      alt="fundraiser"
+                    />
+                    Start a fundraiser - Its's free
+                  </button>
+                </Link>
               </Ripple>
               <br />
               <div className="flex mt-10 text-center">

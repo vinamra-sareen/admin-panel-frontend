@@ -55,6 +55,7 @@ export const Upload = (fieldRenderProps) => {
         {label}
         <Avatar
           style={{ width: 100, height: 100, flexBasis: 100 }}
+          className="w-6"
           shape={"circle"}
           type={"image"}
         >
