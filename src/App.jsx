@@ -1,5 +1,6 @@
 import "@progress/kendo-theme-default/dist/all.css";
 import "./App.css";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/header.jsx";
 import Home from "./pages/home";
@@ -11,27 +12,40 @@ import Dashboard from "./pages/dashboard";
 import Profile from "./pages/dashboard/profile";
 import Settings from "./pages/dashboard/settings";
 import Events from "./pages/dashboard/events";
+import { history } from "./_helpers/history";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { authenticationService } from "./_services/authentication.service";
 
 const App = () => {
+  const [currentUser, setCurrentUser] = React.useState(null);
+  React.useEffect(() => {
+    // authenticationService.currentUser.subscribe((x) =>
+    //   setCurrentUser({ currentUser: x })
+    // );
+  });
+
   return (
     <>
-      <Router>
+      <Router history={history}>
         <Header />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/create-fundraiser" component={CreateFundraiser} />
-          <Route path="/dashboard">
+          <PrivateRoute
+            path="/create-fundraiser"
+            component={CreateFundraiser}
+          />
+          <PrivateRoute path="/dashboard">
             <Dashboard>
               <Switch>
-                <Route path="/dashboard/profile" component={Profile} />
-                <Route path="/dashboard/events" component={Events} />
-                <Route path="/dashboard/settings" component={Settings} />
+                <PrivateRoute path="/dashboard/profile" component={Profile} />
+                <PrivateRoute path="/dashboard/events" component={Events} />
+                <PrivateRoute path="/dashboard/settings" component={Settings} />
               </Switch>
             </Dashboard>
-          </Route>
+          </PrivateRoute>
         </Switch>
 
         <div className="text-xs sm:text-sm bg-gray-200 text-semibold p-5">

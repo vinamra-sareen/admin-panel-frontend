@@ -5,6 +5,8 @@ import random2 from "../assets/random-2.svg";
 import random3 from "../assets/random-3.svg";
 import random4 from "../assets/random-4.svg";
 import random5 from "../assets/random-5.svg";
+import { getUser } from "../_services/user";
+import { useEffect } from "react";
 
 const Home = () => {
   const cardsData = [

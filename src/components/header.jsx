@@ -1,5 +1,5 @@
 import logo from "../assets/logo.png";
-import React from "react";
+import React, { useEffect } from "react";
 import charity from "../assets/charity-box.png";
 import { Ripple } from "@progress/kendo-react-ripple";
 import { Link } from "react-router-dom";
@@ -7,13 +7,16 @@ import {
   AppBar,
   AppBarSection,
   AppBarSpacer,
-  Avatar,
+  // Avatar,
   Drawer,
   DrawerContent,
 } from "@progress/kendo-react-layout";
 
-let kendokaAvatar =
-  "https://www.telerik.com/kendo-react-ui-develop/images/kendoka-react.png";
+import { authenticationService } from "../_services/authentication.service";
+import { useHistory } from "react-router-dom";
+
+// let kendokaAvatar =
+//   "https://www.telerik.com/kendo-react-ui-develop/images/kendoka-react.png";
 
 const items = [
   { text: "Home", icon: "k-i-home", selected: true },
@@ -26,10 +29,15 @@ const items = [
 ];
 
 const Header = () => {
+  const [currentUser, setCurrentUser] = React.useState(
+    authenticationService.currentUserValue
+  );
   const [expanded, setExpanded] = React.useState(false);
   const [selectedId, setSelectedId] = React.useState(
     items.findIndex((x) => x.selected === true)
   );
+  let history = useHistory();
+
   const handleClick = () => {
     setExpanded((prevState) => !prevState);
   };
@@ -37,6 +45,11 @@ const Header = () => {
   const handleSelect = (ev) => {
     setSelectedId(ev.itemIndex);
     setExpanded(false);
+  };
+
+  const logout = () => {
+    authenticationService.logout();
+    history.push("/login");
   };
 
   return (
@@ -90,9 +103,11 @@ const Header = () => {
               <li>
                 <Link to="/register">Register</Link>
               </li>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
+              {currentUser && (
+                <li>
+                  <Link to="/dashboard">Dashboard</Link>
+                </li>
+              )}
             </ul>
           </AppBarSection>
         </div>
