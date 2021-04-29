@@ -16,12 +16,22 @@ export const authenticationService = {
 };
 
 function login(data) {
-  return authenticate(data)
-    .then(handleResponse)
-    .then((user) => {
-      localStorage.setItem("currentUser", JSON.stringify(user));
-      currentUserSubject.next(user);
-    });
+  // console.log(data);
+  return (
+    authenticate(data)
+      // .then(handleResponse)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          const { user } = res.data;
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          localStorage.setItem("token", res.data.token);
+          currentUserSubject.next(user);
+        } else {
+          currentUserSubject.next(null);
+        }
+      })
+  );
 }
 
 function logout() {

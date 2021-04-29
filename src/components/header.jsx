@@ -28,10 +28,7 @@ const items = [
   { text: "Register", icon: "k-i-user" },
 ];
 
-const Header = () => {
-  const [currentUser, setCurrentUser] = React.useState(
-    authenticationService.currentUserValue
-  );
+const Header = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [selectedId, setSelectedId] = React.useState(
     items.findIndex((x) => x.selected === true)
@@ -49,8 +46,11 @@ const Header = () => {
 
   const logout = () => {
     authenticationService.logout();
+
     history.push("/login");
   };
+
+  const { currentUser } = props;
 
   return (
     <React.Fragment>
@@ -97,16 +97,25 @@ const Header = () => {
               <li>
                 <Link to="/about">Contact Us</Link>
               </li>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
+              {!currentUser && (
+                <>
+                  <li>
+                    <Link to="/login">Login</Link>
+                  </li>
+                  <li>
+                    <Link to="/register">Register</Link>
+                  </li>
+                </>
+              )}
               {currentUser && (
-                <li>
-                  <Link to="/dashboard">Dashboard</Link>
-                </li>
+                <>
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link onClick={logout}>Logout</Link>
+                  </li>
+                </>
               )}
             </ul>
           </AppBarSection>

@@ -1,9 +1,21 @@
 import { Form, Field, FormElement } from "@progress/kendo-react-form";
 import FloatingInput from "../components/form/FloatingInput";
-import { emailValidator } from "../validators/index";
+import { useHistory } from "react-router-dom";
+import { authenticationService } from "../_services/authentication.service";
 
 const Login = () => {
-  const handleSubmit = (dataItem) => alert(JSON.stringify(dataItem, null, 2));
+  let history = useHistory();
+
+  const handleLogin = (dataItem) => {
+    // alert(JSON.stringify(dataItem, null, 2));
+    authenticationService
+      .login(dataItem)
+      .then((res) => {
+        history.push("/");
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div className="container mx-auto h-96 m-16 w-full sm:w-96">
       <h1 className="leading-6 font-semibold m-5 sm:text-2xl sm:mb-10">
@@ -11,17 +23,16 @@ const Login = () => {
       </h1>
       <div className="m-5 sm:m-0">
         <Form
-          onSubmit={handleSubmit}
+          onSubmit={handleLogin}
           render={(formRenderProps) => (
             <FormElement>
               <Field
-                id={"email"}
-                name={"email"}
-                label={"Email"}
+                id={"username"}
+                name={"username"}
+                label={"Username/Email"}
                 component={FloatingInput}
-                validator={emailValidator}
-                type="email"
-                hint="Please enter your primary email address"
+                type="username"
+                hint="Please enter your username/email address"
               />
               <Field
                 id={"password"}
