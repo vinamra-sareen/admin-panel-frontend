@@ -22,7 +22,7 @@ const IntroBody = () => {
                 </span>
               </span>
               <br />
-              <span className="text-xs mt-5 block sm:text-lg mt-5 block">
+              <span className="text-xs mt-5 block sm:text-lg">
                 Raise Funds Online for personal, public causes
               </span>
               <br />
