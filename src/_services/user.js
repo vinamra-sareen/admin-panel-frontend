@@ -5,5 +5,5 @@ export const getUser = async () => {
 };
 
 export const authenticate = async (data) => {
-  return await api.post("/users/authenticate", { ...data });
+  return await api.post("/login", { ...data });
 };

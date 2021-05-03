@@ -1,8 +1,9 @@
 import React from "react";
-import help from "../assets/help.jpg";
-import charity from "../assets/charity-box.png";
-import { Ripple } from "@progress/kendo-react-ripple";
-import { Link } from "react-router-dom";
+// import help from "../assets/help.jpg";
+// import charity from "../assets/charity-box.png";
+// import { Ripple } from "@progress/kendo-react-ripple";
+// import { Link } from "react-router-dom";
+import bg from "../assets/adda52.webp"
 
 const IntroSection = () => {
   return <IntroBody />;
@@ -11,7 +12,7 @@ const IntroSection = () => {
 const IntroBody = () => {
   return (
     <>
-      <div className="container font-sans bg-white">
+      {/* <div className="container font-sans bg-white">
         <div className=" flex xs:flex flex-col-reverse sm:flex-row">
           <div className="flex-1">
             <div className="m-8 sm:m-12">
@@ -63,6 +64,9 @@ const IntroBody = () => {
             <img src={help} width="550" height="400" alt="charitable help" />
           </div>
         </div>
+      </div> */}
+      <div>
+        <img src={bg} alt="" />
       </div>
     </>
   );

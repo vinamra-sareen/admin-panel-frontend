@@ -4,11 +4,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/header.jsx";
 import Home from "./pages/home";
-import About from "./pages/about";
 import Login from "./pages/login";
-import Register from "./pages/register";
-// import CreateFundraiser from "./pages/fundraiser";
-import CreateFundraiser from "./pages/fundraiser2";
 import Dashboard from "./pages/dashboard";
 import Profile from "./pages/dashboard/profile";
 import Settings from "./pages/dashboard/settings";
@@ -34,33 +30,28 @@ class App extends Component {
           <Header currentUser={currentUser} />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/about" component={About} />
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/register" component={Register} />
-            <PrivateRoute
-              path="/create-fundraiser"
-              component={CreateFundraiser}
-            />
-            <PrivateRoute path="/dashboard" component={Dashboard}>
+            <PrivateRoute path="/admin" component={Dashboard}>
               <Dashboard>
                 <Switch>
-                  <PrivateRoute path="/dashboard/profile" component={Profile} />
+                  {/* <PrivateRoute path="/dashboard/profile" component={Profile} />
                   <PrivateRoute path="/dashboard/events" component={Events} />
                   <PrivateRoute
                     path="/dashboard/settings"
                     component={Settings}
-                  />
+                  /> */}
+                  <PrivateRoute path="/admin/*" component={Profile} />
                 </Switch>
               </Dashboard>
             </PrivateRoute>
             <Route path="*" component={NotFound} />
           </Switch>
 
-          <div className="text-xs sm:text-sm bg-gray-200 text-semibold p-5">
+          {/* <div className="text-xs sm:text-sm bg-gray-200 text-semibold p-5">
             @ 2021 - Charitable Crowdfunding. All rights reserved
-          </div>
+          </div> */}
         </Router>
       </>
     );

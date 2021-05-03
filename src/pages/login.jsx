@@ -7,7 +7,6 @@ const Login = () => {
   let history = useHistory();
 
   const handleLogin = (dataItem) => {
-    // alert(JSON.stringify(dataItem, null, 2));
     authenticationService
       .login(dataItem)
       .then((res) => {
@@ -27,11 +26,11 @@ const Login = () => {
           render={(formRenderProps) => (
             <FormElement>
               <Field
-                id={"username"}
-                name={"username"}
+                id={"user_name"}
+                name={"user_name"}
                 label={"Username/Email"}
                 component={FloatingInput}
-                type="username"
+                type="text"
                 hint="Please enter your username/email address"
               />
               <Field

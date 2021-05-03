@@ -5,8 +5,6 @@ import random2 from "../assets/random-2.svg";
 import random3 from "../assets/random-3.svg";
 import random4 from "../assets/random-4.svg";
 import random5 from "../assets/random-5.svg";
-import { getUser } from "../_services/user";
-import { useEffect } from "react";
 
 const Home = () => {
   const cardsData = [
@@ -82,17 +80,17 @@ const Home = () => {
     <>
       <IntroSection />
       <hr />
-      <div className="container p-5 sm:py-12 sm:px-5 bg-white text-center">
+      {/* <div className="container p-5 sm:py-12 sm:px-5 bg-white text-center">
         <h1 className="text-3xl sm:text-4xl font-lighter ">
           Current <span className="text-charity underline">Events</span>
         </h1>
-        {/* <input
+        <input
           className="mt-12 focus:border-charity focus:ring-1 focus:ring-charity focus:outline-none text-sm text-black placeholder-gray-500 border border-gray-500 rounded-md py-2 pl-10 w-full sm:w-3/6"
           type="text"
           aria-label="Filter Events"
           placeholder="Search ongoing charity events by name, location, creator and sponosors."
           autoFocus="autofocus"
-        /> */}
+        />
         <div className="mt-12 w-full flex justify-center ">
           <div className="flex flex-wrap justify-evenly w-full sm:w-8/12">
             {cardsData.map((card, index) => {
@@ -104,7 +102,7 @@ const Home = () => {
             })}
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

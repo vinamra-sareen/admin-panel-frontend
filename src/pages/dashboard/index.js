@@ -3,26 +3,27 @@ import { withRouter } from "react-router-dom";
 
 import { Drawer, DrawerContent } from "@progress/kendo-react-layout";
 import Welcome from "./welcome";
+import { getModules } from "../../_services/admin";
 // import { Button } from "@progress/kendo-react-buttons";
 
 const items = [
   {
     text: "Welcome",
     icon: "k-i-home",
-    route: "/dashboard",
+    route: "/admin",
   },
   {
     text: "Profile",
     icon: "k-i-user",
-    route: "/dashboard/profile",
+    route: "/admin/admin_compliance",
   },
-  { text: "Events", icon: "k-i-calendar", route: "/dashboard/events" },
+  { text: "Events", icon: "k-i-calendar", route: "/affiliate_panel/partnerList" },
   { separator: true },
   { text: "Settings", icon: "k-i-cog", route: "/dashboard/settings" },
 ];
 
 class DrawerRouterContainer extends React.Component {
-  state = { expanded: true };
+  state = { expanded: true, items: [] };
 
   handleClick = () => {
     this.setState((e) => ({ expanded: !e.expanded }));
@@ -41,6 +42,21 @@ class DrawerRouterContainer extends React.Component {
     }
   };
 
+  componentDidMount(){
+    getModules().then(res => {
+      if(res.status === 200) {
+        let items = []; 
+        res.data.modules.map(module => {
+          items.push({ text: module.navigation_name, route: `${module.module_link}?module_id=${module.module_id}` })
+        })
+        this.setState({ items });
+        
+      } else {
+        console.error('Oops ... Something went wrong');
+      }
+    }).catch(err => console.log(err));
+  }
+
   render() {
     let selected = this.setSelectedItem(this.props.location.pathname);
     return (
@@ -54,7 +70,7 @@ class DrawerRouterContainer extends React.Component {
             position={"start"}
             mode={"push"}
             mini={true}
-            items={items.map((item) => ({
+            items={this.state.items.map((item) => ({
               ...item,
               selected: item.text === selected,
             }))}

@@ -1,21 +1,21 @@
 import { Ripple } from "@progress/kendo-react-ripple";
 import { useEffect, useState } from "react";
-import { getByUsername } from "../../_services/events";
-import EventCard from "../../components/Card";
+// import { getByUsername } from "../../_services/events";
+// import EventCard from "../../components/Card";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    getByUsername()
-      .then((res) => {
-        if (res.status === 200) {
-          const { events } = res.data;
-          setEvents(events);
-        }
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  // useEffect(() => {
+  //   getByUsername()
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         const { events } = res.data;
+  //         setEvents(events);
+  //       }
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, []);
 
   return (
     <>

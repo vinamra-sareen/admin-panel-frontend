@@ -1,7 +1,5 @@
-import logo from "../assets/logo.png";
+import logo from "../assets/adda52-logo.png";
 import React, { useEffect } from "react";
-import charity from "../assets/charity-box.png";
-import { Ripple } from "@progress/kendo-react-ripple";
 import { Link } from "react-router-dom";
 import {
   AppBar,
@@ -83,34 +81,22 @@ const Header = (props) => {
           <img src={logo} width="150" height="70" alt="charitable-logo" />
         </AppBarSection>
 
-        <AppBarSpacer style={{ width: 32 }} />
+        <AppBarSpacer />
 
         <div className="hidden sm:flex">
           <AppBarSection>
             <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/donate">Donate</Link>
-              </li>
-              <li>
-                <Link to="/about">Contact Us</Link>
-              </li>
               {!currentUser && (
                 <>
                   <li>
                     <Link to="/login">Login</Link>
-                  </li>
-                  <li>
-                    <Link to="/register">Register</Link>
                   </li>
                 </>
               )}
               {currentUser && (
                 <>
                   <li>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link to="/admin">Dashboard</Link>
                   </li>
                   <li>
                     <Link onClick={logout}>Logout</Link>
@@ -121,30 +107,7 @@ const Header = (props) => {
           </AppBarSection>
         </div>
 
-        <AppBarSpacer />
 
-        <div className="hidden sm:flex">
-          <AppBarSection className="actions">
-            <Ripple>
-              <button className="k-button text-base font-semibold px-6 py-2 rounded-lg">
-                <img src={charity} width="24" height="24" alt="fundraiser" />
-                Start a fundraiser
-              </button>
-            </Ripple>
-          </AppBarSection>
-
-          <AppBarSection>
-            <span className="k-appbar-separator" />
-          </AppBarSection>
-
-          {/* <AppBarSection>
-            <Link to="/profile">
-              <Avatar shape="circle" type="image">
-                <img src={kendokaAvatar} alt="kendo-avatar" />
-              </Avatar>
-            </Link>
-          </AppBarSection> */}
-        </div>
       </AppBar>
       <style>{`
                 body {
