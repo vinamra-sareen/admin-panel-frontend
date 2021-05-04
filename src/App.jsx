@@ -7,23 +7,40 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import Profile from "./pages/dashboard/profile";
-import Settings from "./pages/dashboard/settings";
-import Events from "./pages/dashboard/events";
 import { PrivateRoute } from "./components/PrivateRoute";
 import NotFound from "./components/NotFound";
 import { authenticationService } from "./_services/authentication.service";
+import { getModules } from "./_services/admin";
+import Welcome from "./pages/dashboard/welcome"
 
 class App extends Component {
-  state = { currentUser: null };
+  state = { currentUser: null, items: [] };
 
   componentDidMount() {
     authenticationService.currentUser.subscribe((x) =>
       this.setState({ currentUser: x })
     );
+
+    getModules()
+      .then((res) => {
+        if (res.status === 200) {
+          let items= [];
+          res.data.modules.map((module) => {
+            items.push({
+              text: module.navigation_name,
+              route: `${module.module_link}?module_id=${module.module_id}`,
+            });
+          });
+          this.setState({ items });
+        } else {
+          console.error("Oops ... Something went wrong");
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   render() {
-    const { currentUser } = this.state;
+    const { currentUser,items } = this.state;
     return (
       <>
         <Router>
@@ -33,25 +50,15 @@ class App extends Component {
             <Route path="/login">
               <Login />
             </Route>
-            <PrivateRoute path="/admin" component={Dashboard}>
+            <PrivateRoute path="/admin">
               <Dashboard>
                 <Switch>
-                  {/* <PrivateRoute path="/dashboard/profile" component={Profile} />
-                  <PrivateRoute path="/dashboard/events" component={Events} />
-                  <PrivateRoute
-                    path="/dashboard/settings"
-                    component={Settings}
-                  /> */}
-                  <PrivateRoute path="/admin/*" component={Profile} />
+                  <PrivateRoute path={"/admin/admin_compliance"} component={Welcome} />
                 </Switch>
               </Dashboard>
             </PrivateRoute>
             <Route path="*" component={NotFound} />
           </Switch>
-
-          {/* <div className="text-xs sm:text-sm bg-gray-200 text-semibold p-5">
-            @ 2021 - Charitable Crowdfunding. All rights reserved
-          </div> */}
         </Router>
       </>
     );

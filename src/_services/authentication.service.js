@@ -23,7 +23,6 @@ function login(data) {
   return (
     authenticate(data)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           const { user_name, isAdmin, token, role_id, user_id } = res.data;
           localStorage.setItem("currentUser", JSON.stringify({user_name, isAdmin}));

@@ -1,25 +1,22 @@
 import * as React from "react";
-import { withRouter } from "react-router-dom";
-
+import { withRouter, Route, Switch } from "react-router-dom";
 import { Drawer, DrawerContent } from "@progress/kendo-react-layout";
 import Welcome from "./welcome";
+import { PrivateRoute } from "../../components/PrivateRoute";
+import UserBankDetailsReport from "./admin_compliance/user_bank_details_report";
 import { getModules } from "../../_services/admin";
 // import { Button } from "@progress/kendo-react-buttons";
 
-const items = [
+let items = [
   {
     text: "Welcome",
     icon: "k-i-home",
     route: "/admin",
   },
-  {
-    text: "Profile",
-    icon: "k-i-user",
-    route: "/admin/admin_compliance",
-  },
-  { text: "Events", icon: "k-i-calendar", route: "/affiliate_panel/partnerList" },
-  { separator: true },
-  { text: "Settings", icon: "k-i-cog", route: "/dashboard/settings" },
+  // {
+  //   text: "Admin Compliance",
+  //   route: "/admin/admin_compliance",
+  // },
 ];
 
 class DrawerRouterContainer extends React.Component {
@@ -31,46 +28,56 @@ class DrawerRouterContainer extends React.Component {
 
   onSelect = (e) => {
     this.setState({ expanded: true });
+    console.log("eee: ", e.itemTarget.props.route, " props: ", this.props);
     this.props.history.push(e.itemTarget.props.route);
   };
 
   setSelectedItem = (pathName) => {
-    console.log(pathName);
-    let currentPath = items.find((item) => item.route === pathName);
+    let currentPath = items.find((item) => item.route.split("?")[0] === pathName);
+    console.log(currentPath);
     if (currentPath.text) {
       return currentPath.text;
     }
   };
 
-  componentDidMount(){
-    getModules().then(res => {
-      if(res.status === 200) {
-        let items = []; 
-        res.data.modules.map(module => {
-          items.push({ text: module.navigation_name, route: `${module.module_link}?module_id=${module.module_id}` })
-        })
-        this.setState({ items });
-        
-      } else {
-        console.error('Oops ... Something went wrong');
-      }
-    }).catch(err => console.log(err));
+  componentDidMount() {
+    getModules()
+      .then((res) => {
+        if (res.status === 200) {
+          res.data.modules.map((module) => {
+            items.push({
+              text: module.navigation_name,
+              route: `${module.module_link}?module_id=${module.module_id}`,
+            });
+          });
+          this.setState({ items });
+        } else {
+          console.error("Oops ... Something went wrong");
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   render() {
     let selected = this.setSelectedItem(this.props.location.pathname);
+    <Switch>
+      {items.map((item) => (
+        <PrivateRoute
+          path={`${this.props.match.url}/${item.route}`}
+          component={Welcome}
+        />
+      ))}
+    </Switch>;
+
     return (
       <>
         <div className="container mt-1 w-full hidden sm:block">
-          {/* <div className="w-14 bg-white text-center">
-          <Button icon="menu" look="flat" onClick={this.handleClick} />
-        </div> */}
           <Drawer
             expanded={this.state.expanded}
             position={"start"}
             mode={"push"}
             mini={true}
-            items={this.state.items.map((item) => ({
+            items={items.map((item) => ({
               ...item,
               selected: item.text === selected,
             }))}
@@ -80,9 +87,6 @@ class DrawerRouterContainer extends React.Component {
           </Drawer>
         </div>
         <div className="container mt-1 w-full block sm:hidden">
-          {/* <div className="w-14 bg-white text-center">
-          <Button icon="menu" look="flat" onClick={this.handleClick} />
-        </div> */}
           <Drawer
             expanded={false}
             position={"start"}
