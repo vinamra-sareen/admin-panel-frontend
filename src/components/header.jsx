@@ -85,7 +85,7 @@ const Header = (props) => {
 
         <div className="hidden sm:flex">
           <AppBarSection>
-            <ul>
+            <ul className="adda52-ul">
               {!currentUser && (
                 <>
                   <li>
@@ -113,28 +113,19 @@ const Header = (props) => {
                 body {
                     background: #fafafa;
                 }
-                ul {
+                .adda52-ul {
                     font-size: 14px;
                     list-style-type: none;
                     padding: 0;
                     margin: 0;
                     display: flex;
                 }
-                li {
+                .adda52-ul > li {
                     margin: 0 10px;
                 }
-                li:hover {
+                .adda52-ul > li:hover {
                     cursor: pointer;
                     color: #ff545a;
-                }
-                .k-button {
-                    padding: 10px 25px;
-                    background-color: #ff545a;
-                    color: white;
-                    border-radius: 20px;
-                }
-                .k-button:hover {
-                  background: #ff545a;
                 }
                 .k-badge-container {
                     margin-right: 8px;

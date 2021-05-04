@@ -1,5 +1,5 @@
 import IntroSection from "../components/intro.jsx";
-import EventCard from "../components/Card";
+import EventCard from "../components/base/Card";
 import random1 from "../assets/random-1.svg";
 import random2 from "../assets/random-2.svg";
 import random3 from "../assets/random-3.svg";

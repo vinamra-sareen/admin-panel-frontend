@@ -6,12 +6,13 @@ import Header from "./components/header.jsx";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
-import Profile from "./pages/dashboard/profile";
 import { PrivateRoute } from "./components/PrivateRoute";
-import NotFound from "./components/NotFound";
+import NotFound from "./components/base/NotFound";
 import { authenticationService } from "./_services/authentication.service";
 import { getModules } from "./_services/admin";
-import Welcome from "./pages/dashboard/welcome"
+import Module from "./pages/dashboard/module";
+import UserBankDetailsReport from "./pages/dashboard/admin_compliance/user_bank_details_report";
+import Test from "./pages/test";
 
 class App extends Component {
   state = { currentUser: null, items: [] };
@@ -24,7 +25,7 @@ class App extends Component {
     getModules()
       .then((res) => {
         if (res.status === 200) {
-          let items= [];
+          let items = [];
           res.data.modules.map((module) => {
             items.push({
               text: module.navigation_name,
@@ -40,7 +41,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser,items } = this.state;
+    const { currentUser, items } = this.state;
     return (
       <>
         <Router>
@@ -53,10 +54,23 @@ class App extends Component {
             <PrivateRoute path="/admin">
               <Dashboard>
                 <Switch>
-                  <PrivateRoute path={"/admin/admin_compliance"} component={Welcome} />
+                  <PrivateRoute
+                    path={"/admin/business_report"}
+                    component={Module}
+                  />
+                  <PrivateRoute path={"/admin/user"} component={Module} />
+                  <PrivateRoute
+                    path={"/admin/admin_compliance/getBankDetailReport"}
+                    component={UserBankDetailsReport}
+                  />
+                  <PrivateRoute
+                    path={"/admin/admin_compliance"}
+                    component={Module}
+                  />
                 </Switch>
               </Dashboard>
             </PrivateRoute>
+            <Route path="/test" component={Test} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>

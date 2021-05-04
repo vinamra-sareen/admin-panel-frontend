@@ -1,7 +1,7 @@
 import * as React from "react";
 import { withRouter, Route, Switch } from "react-router-dom";
 import { Drawer, DrawerContent } from "@progress/kendo-react-layout";
-import Welcome from "./welcome";
+import Welcome from "./module";
 import { PrivateRoute } from "../../components/PrivateRoute";
 import UserBankDetailsReport from "./admin_compliance/user_bank_details_report";
 import { getModules } from "../../_services/admin";
@@ -59,15 +59,7 @@ class DrawerRouterContainer extends React.Component {
   }
 
   render() {
-    let selected = this.setSelectedItem(this.props.location.pathname);
-    <Switch>
-      {items.map((item) => (
-        <PrivateRoute
-          path={`${this.props.match.url}/${item.route}`}
-          component={Welcome}
-        />
-      ))}
-    </Switch>;
+    // let selected = this.setSelectedItem(this.props.location.pathname);
 
     return (
       <>
@@ -79,7 +71,7 @@ class DrawerRouterContainer extends React.Component {
             mini={true}
             items={items.map((item) => ({
               ...item,
-              selected: item.text === selected,
+              // selected: item.text === selected,
             }))}
             onSelect={this.onSelect}
           >
@@ -94,7 +86,7 @@ class DrawerRouterContainer extends React.Component {
             mini={true}
             items={items.map((item) => ({
               ...item,
-              selected: item.text === selected,
+              // selected: item.text === selected,
             }))}
             onSelect={this.onSelect}
           >
