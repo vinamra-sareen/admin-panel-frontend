@@ -21,7 +21,7 @@ const Login = () => {
         if (res.status === 200) {
           setTimeout(() => {
             setLoading(false);
-            history.push("/");
+            history.push("/admin");
           }, 500);
         } else {
           setLoading(false);
@@ -34,46 +34,49 @@ const Login = () => {
   return (
     <div className="container mx-auto h-96 m-16 w-full sm:w-96">
       {loading && (
-        <div className="container w-3/12 absolute z-40 h-96 flex justify-center align-center margin-auto backdrop-filter backdrop-grayscale backdrop-blur-sm backdrop-contrast-100">
+        <div className="container w-3/12 absolute z-40 h-96 flex justify-center align-center backdrop-filter backdrop-grayscale backdrop-blur-sm backdrop-contrast-100">
           <Loader size="large" type="converging-spinner" />
         </div>
       )}
-
-      <h1 className="leading-6 font-semibold m-5 sm:text-2xl sm:mb-10">
-        User Login
-      </h1>
-      <div className="m-5 sm:m-0">
-        <Form
-          onSubmit={handleLogin}
-          render={(formRenderProps) => (
-            <FormElement>
-              <Field
-                id={"user_name"}
-                name={"user_name"}
-                label={"Username/Email"}
-                component={FloatingInput}
-                type="text"
-                hint="Please enter your username/email address"
-              />
-              <Field
-                id={"password"}
-                name={"password"}
-                label={"Password"}
-                component={FloatingInput}
-                type="password"
-              />
-              <div className="k-form-buttons">
-                <Button primary={true} disabled={!formRenderProps.allowSubmit}>
-                  Search
-                </Button>
-              </div>
-            </FormElement>
-          )}
-        />
-      </div>
-      <Fade enter={true} exit={true}>
-        {error && (
-            <Notification 
+      <div className="bg-white p-5 flex flex-col justify-center items-center shadow ">
+        <h1 className="leading-6 font-semibold m-5 sm:text-2xl sm:mb-10">
+          User Login
+        </h1>
+        <div className="m-5 sm:m-0">
+          <Form
+            onSubmit={handleLogin}
+            render={(formRenderProps) => (
+              <FormElement>
+                <Field
+                  id={"user_name"}
+                  name={"user_name"}
+                  label={"Username/Email"}
+                  component={FloatingInput}
+                  type="text"
+                  hint="Please enter your username/email address"
+                />
+                <Field
+                  id={"password"}
+                  name={"password"}
+                  label={"Password"}
+                  component={FloatingInput}
+                  type="password"
+                />
+                <div className="k-form-buttons">
+                  <Button
+                    primary={true}
+                    disabled={!formRenderProps.allowSubmit}
+                  >
+                    Login
+                  </Button>
+                </div>
+              </FormElement>
+            )}
+          />
+        </div>
+        <Fade enter={true} exit={true}>
+          {error && (
+            <Notification
               className="mt-10"
               type={{ style: "error", icon: true }}
               closable={true}
@@ -81,8 +84,9 @@ const Login = () => {
             >
               <span>Invalid Credentials ...</span>
             </Notification>
-        )}
-      </Fade>
+          )}
+        </Fade>
+      </div>
     </div>
   );
 };

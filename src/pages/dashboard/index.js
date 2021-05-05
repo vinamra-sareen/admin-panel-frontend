@@ -1,10 +1,11 @@
 import * as React from "react";
-import { withRouter, Route, Switch } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { Drawer, DrawerContent } from "@progress/kendo-react-layout";
 import Welcome from "./module";
 import { PrivateRoute } from "../../components/PrivateRoute";
 import UserBankDetailsReport from "./admin_compliance/user_bank_details_report";
 import { getModules } from "../../_services/admin";
+import { authenticationService } from "../../_services/authentication.service";
 // import { Button } from "@progress/kendo-react-buttons";
 
 let items = [
@@ -33,7 +34,9 @@ class DrawerRouterContainer extends React.Component {
   };
 
   setSelectedItem = (pathName) => {
-    let currentPath = items.find((item) => item.route.split("?")[0] === pathName);
+    let currentPath = items.find(
+      (item) => item.route.split("?")[0] === pathName
+    );
     console.log(currentPath);
     if (currentPath.text) {
       return currentPath.text;
@@ -60,7 +63,12 @@ class DrawerRouterContainer extends React.Component {
 
   render() {
     // let selected = this.setSelectedItem(this.props.location.pathname);
-
+    const token = authenticationService.getToken();
+    const user = authenticationService.currentUser;
+    console.log((!token || user === null));
+    if ((!token || user === null)) {
+      return <Redirect to="/login" />;
+    }
     return (
       <>
         <div className="container mt-1 w-full hidden sm:block">

@@ -1,21 +1,21 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import {authenticationService} from "../_services/authentication.service";
 
-import { authenticationService } from "../_services/authentication.service";
+const token = authenticationService.getToken();
+const user = authenticationService.currentUser
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={(props) => {
-      const currentUser = authenticationService.currentUserValue;
-      if (!currentUser) {
-        return (
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />
-        );
-      }
-      return <Component {...props} />;
-    }}
+    render={props =>
+      !user ? (
+        <Redirect
+          to={{ pathname: "/login", state: { from: props.location } }}
+        />
+      ) : (
+        <Component {...props} />
+      )
+    }
   />
 );

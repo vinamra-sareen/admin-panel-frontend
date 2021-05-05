@@ -10,6 +10,8 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import NotFound from "./components/base/NotFound";
 import { authenticationService } from "./_services/authentication.service";
 import { routes } from "./routes";
+import Module from "./pages/dashboard/module"
+import UserBankDetailsReport from "./pages/dashboard/admin_compliance/user_bank_details_report"
 
 class App extends Component {
   
@@ -32,19 +34,22 @@ class App extends Component {
           <Header currentUser={currentUser} />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
+            <Route exact path="/login" component={Login} />
             <PrivateRoute path="/admin">
               <Dashboard>
                 <Switch>
-                  {routes &&
-                    routes.map((module, idx) => (
-                      <PrivateRoute
-                        key={idx}
-                        path={module.path}
-                        component={module.component}
-                        exact={module.exact}
-                      />
-                    ))}
+                  {/* <PrivateRoute
+                    path={"/admin/business_report"}
+                    component={Module}
+                  /> */}
+                  <PrivateRoute
+                    path={"/admin/admin_compliance/getBankDetailReport"}
+                    component={UserBankDetailsReport}
+                  />
+                  <PrivateRoute
+                    path={"/admin/admin_compliance"}
+                    component={Module}
+                  />
                 </Switch>
               </Dashboard>
             </PrivateRoute>
