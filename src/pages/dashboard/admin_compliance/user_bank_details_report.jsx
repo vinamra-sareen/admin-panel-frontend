@@ -52,8 +52,6 @@ class Demo extends React.Component {
     getUserBankReportDetails()
       .then((res) => {
         if (res.status === 200) {
-          // setData(res.data.res);
-          console.log(res);
           this.setState({ data: res.data.res, total: res.data.res.length });
         } else {
           console.log(res);
@@ -78,10 +76,9 @@ class Demo extends React.Component {
     };
 
     let { skip, take, data, filter } = this.state;
-    data = data.slice(skip, take + skip);
     const grid = (
       <Grid
-        data={data && filterBy(data, filter)}
+        data={data && filterBy(data.slice(skip, take + skip), filter)}
         sortable={true}
         pageable={true}
         filterable={true}
