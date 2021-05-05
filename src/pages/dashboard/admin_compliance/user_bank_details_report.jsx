@@ -10,7 +10,7 @@ import { ExcelExport } from "@progress/kendo-react-excel-export";
 import { DatePicker } from "@progress/kendo-react-dateinputs";
 import { Button } from "@progress/kendo-react-buttons";
 import { filterBy } from "@progress/kendo-data-query";
-import { Form, Field, FormElement } from "@progress/kendo-react-form";
+import { Loader } from "@progress/kendo-react-indicators";
 import { getUserBankReportDetails } from "../../../_services/admin";
 
 class Demo extends React.Component {
@@ -34,6 +34,7 @@ class Demo extends React.Component {
     user_id: null,
     from_date: null,
     to_date: null,
+    loading: false,
   };
 
   handleSearch = () => {
@@ -73,11 +74,12 @@ class Demo extends React.Component {
   };
 
   componentDidMount() {
-    let data = { user_id: "2703202" };
+    this.setState({ loading: true });
     getUserBankReportDetails()
       .then((res) => {
         if (res.status === 200) {
           this.setState({ data: res.data.res, total: res.data.res.length });
+          this.setState({ loading: false });
         } else {
           console.log(res);
         }
@@ -86,21 +88,7 @@ class Demo extends React.Component {
   }
 
   render() {
-    const handleSearch = (data) => {
-      getUserBankReportDetails(data)
-        .then((res) => {
-          if (res.status === 200) {
-            // setData(res.data.res);
-            console.log(res);
-            this.setState({ data: res.data.res, total: res.data.res.length });
-          } else {
-            console.log(res);
-          }
-        })
-        .catch((err) => console.error(err));
-    };
-
-    let { skip, take, data, filter } = this.state;
+    let { skip, take, data, filter, loading } = this.state;
     const grid = (
       <Grid
         data={data && filterBy(data.slice(skip, take + skip), filter)}
@@ -137,62 +125,36 @@ class Demo extends React.Component {
           </button>
         </GridToolbar>
         <Column field="user_name" title="Username" filter="text" />
-        <Column field="request_by" title="Request By" filter="text" />
+        <Column field="requested_by" title="Request By" filter="text" />
         <Column field="modified_on" title="Request Date" filter={"date"} />
-        <Column field="first_name" title="New Name" filter="text" />
-        <Column
-          field="account_number"
-          title="Old Account Number"
-          filter={"numeric"}
-        />
-        <Column field="IFSC" title="New IFSC Code" filter="text" />
-        <Column field="account_type" title="New Account Type" filter="text" />
+        <Column field="first_name" title="Name" filter="text" />
+        <Column field="account_number" title="Account No." filter={"numeric"} />
+        <Column field="IFSC" title="IFSC Code" filter="text" />
+        <Column field="account_type" title="Account Type" filter="text" />
         <Column field="status" title="Status" filter="text" />
         <Column field="approved_by" title="Approved By" filter="text" />
-        <Column field="linux_added_on" title="Approval Date" filter={"date"} />
+        <Column
+          field="linux_added_on"
+          title="Approval Date"
+          filter={"date"}
+          style={{ "font-size": "10px" }}
+        />
       </Grid>
     );
     return (
       <>
-        <div className="container w-11/12 m-10">
+        <div className="container w-full mt-10">
+            {loading &&
+                <div className="container w-10/12 absolute z-40 h-96 flex justify-center align-center margin-auto backdrop-filter backdrop-grayscale backdrop-blur-sm backdrop-contrast-100">
+            <Loader size="large" type="converging-spinner" />
+          </div>
+        }
           <h1 className="font-semibold text-xl leading-6 text-blueGray-900 m-5">
             User Bank Details Report
           </h1>
 
           <div className="m-5">
             <div className="my-10">
-              {/* <Form
-                onSubmit={handleSearch}
-                render={(formRenderProps) => (
-                  <FormElement style={{ maxWidth: 450 }}>
-                    <Field
-                      placeholder={"Search By User ID"}
-                      name="user_id"
-                      component={Input}
-                    />
-                    <Field
-                      placeholder={"From Date"}
-                      name="from_date"
-                      component={DatePicker}
-                    />
-                    <Field
-                      placeholder={"To Date"}
-                      name="to_date"
-                      component={DatePicker}
-                    />
-                    <div className="k-form-buttons">
-                      <button
-                        type={"submit"}
-                        className="k-button"
-                        disabled={!formRenderProps.allowSubmit}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </FormElement>
-                )}
-              /> */}
-
               <Input
                 placeholder={"Search By User ID"}
                 defaultValue={""}
