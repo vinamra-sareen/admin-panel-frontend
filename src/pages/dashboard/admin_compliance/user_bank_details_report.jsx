@@ -10,6 +10,8 @@ import { ExcelExport } from "@progress/kendo-react-excel-export";
 import { DatePicker } from "@progress/kendo-react-dateinputs";
 import { Button } from "@progress/kendo-react-buttons";
 import { filterBy } from "@progress/kendo-data-query";
+import { Notification } from "@progress/kendo-react-notification";
+import { Fade } from "@progress/kendo-react-animation";
 import { Loader } from "@progress/kendo-react-indicators";
 import { getUserBankReportDetails } from "../../../_services/admin";
 
@@ -35,20 +37,22 @@ class Demo extends React.Component {
     from_date: null,
     to_date: null,
     loading: false,
+    error: false,
   };
 
   handleSearch = () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
 
     const { user_id, start_date, end_date } = this.state;
     let data = { user_id, from_date: start_date, to_date: end_date };
     getUserBankReportDetails(data)
       .then((res) => {
         if (res.status === 200) {
-          this.setState({loading: false});
+          this.setState({ loading: false });
           this.setState({ data: res.data.res, total: res.data.res.length });
         } else {
-          console.log(res);
+          this.setState({ loading: false });
+          this.setState({ error: true });
         }
       })
       .catch((err) => console.error(err));
@@ -83,10 +87,14 @@ class Demo extends React.Component {
           this.setState({ data: res.data.res, total: res.data.res.length });
           this.setState({ loading: false });
         } else {
-          console.log(res);
+          this.setState({ loading: false });
+          this.setState({ error: true });
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        this.setState({ loading: false });
+        this.setState({ error: true });
+      });
   }
 
   render() {
@@ -146,11 +154,11 @@ class Demo extends React.Component {
     return (
       <>
         <div className="container w-full mt-10">
-            {loading &&
-                <div className="container w-10/12 absolute z-40 h-screen flex justify-center items-center margin-auto backdrop-filter backdrop-grayscale backdrop-blur-sm backdrop-contrast-100">
-            <Loader size="large" type="converging-spinner" />
-          </div>
-        }
+          {loading && (
+            <div className="container w-10/12 absolute z-40 h-screen flex justify-center items-center margin-auto backdrop-filter backdrop-grayscale backdrop-blur-sm backdrop-contrast-100">
+              <Loader size="large" type="converging-spinner" />
+            </div>
+          )}
           <h1 className="font-semibold text-xl leading-6 text-blueGray-900 m-5">
             User Bank Details Report
           </h1>
@@ -198,6 +206,20 @@ class Demo extends React.Component {
                 {grid}
               </GridPDFExport>
             </ExcelExport>
+          </div>
+          <div className="absolute right-0">
+            <Fade enter={true} exit={true}>
+              {this.state.error && (
+                <Notification
+                  className="mt-10"
+                  type={{ style: "error", icon: true }}
+                  closable={true}
+                  onClose={() => this.setState({ error: false })}
+                >
+                  <span>Network Error</span>
+                </Notification>
+              )}
+            </Fade>
           </div>
         </div>
       </>
