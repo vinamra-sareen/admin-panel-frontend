@@ -38,12 +38,14 @@ class Demo extends React.Component {
   };
 
   handleSearch = () => {
+    this.setState({loading: true});
+
     const { user_id, start_date, end_date } = this.state;
     let data = { user_id, from_date: start_date, to_date: end_date };
     getUserBankReportDetails(data)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res);
+          this.setState({loading: false});
           this.setState({ data: res.data.res, total: res.data.res.length });
         } else {
           console.log(res);
@@ -145,7 +147,7 @@ class Demo extends React.Component {
       <>
         <div className="container w-full mt-10">
             {loading &&
-                <div className="container w-10/12 absolute z-40 h-96 flex justify-center align-center margin-auto backdrop-filter backdrop-grayscale backdrop-blur-sm backdrop-contrast-100">
+                <div className="container w-10/12 absolute z-40 h-screen flex justify-center items-center margin-auto backdrop-filter backdrop-grayscale backdrop-blur-sm backdrop-contrast-100">
             <Loader size="large" type="converging-spinner" />
           </div>
         }

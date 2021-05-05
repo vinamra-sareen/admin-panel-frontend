@@ -31,6 +31,7 @@ function login(data) {
         } else {
           currentUserSubject.next(null);
         }
+        return res;
       })
   );
 }
