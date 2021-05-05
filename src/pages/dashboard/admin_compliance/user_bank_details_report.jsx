@@ -9,7 +9,8 @@ import { GridPDFExport } from "@progress/kendo-react-pdf";
 import { ExcelExport } from "@progress/kendo-react-excel-export";
 import { DatePicker } from "@progress/kendo-react-dateinputs";
 import { Button } from "@progress/kendo-react-buttons";
-import { filterBy } from '@progress/kendo-data-query';
+import { filterBy } from "@progress/kendo-data-query";
+import { Form, Field, FormElement } from "@progress/kendo-react-form";
 import { getUserBankReportDetails } from "../../../_services/admin";
 
 class Demo extends React.Component {
@@ -26,14 +27,21 @@ class Demo extends React.Component {
     exporting: false,
     total: 0,
     take: 10,
+<<<<<<< HEAD
     filter: {},
     user_id:"",
     start_date: null,
     end_date: null
+=======
+    filter: {
+      logic: "and",
+      filters: [{ field: "user_name", operator: "contains", value: "" }],
+    },
+>>>>>>> 4a0a72ae94ad7d9539b9f91447e40b8d8f9b8246
   };
 
   pageChange = (event) => {
-    this.setState({skip: event.page.skip, take: event.page.take});
+    this.setState({ skip: event.page.skip, take: event.page.take });
   };
 
   exportPDF = () => {
@@ -47,6 +55,7 @@ class Demo extends React.Component {
   };
 
   componentDidMount() {
+<<<<<<< HEAD
     getUserBankReportDetails()
       .then((res) => {
         if (res.status === 200) {
@@ -70,6 +79,10 @@ class Demo extends React.Component {
     const {user_id, start_date, end_date}= this.state;
     let data = { user_id, from_date:start_date, to_date:end_date };
     getUserBankReportDetails(data)
+=======
+    let data = { user_id: "2703202" };
+    getUserBankReportDetails()
+>>>>>>> 4a0a72ae94ad7d9539b9f91447e40b8d8f9b8246
       .then((res) => {
         if (res.status === 200) {
           console.log(res);
@@ -82,10 +95,25 @@ class Demo extends React.Component {
   }
 
   render() {
-    let { skip, take, data } = this.state;
+    const handleSearch = (data) => {
+      getUserBankReportDetails(data)
+        .then((res) => {
+          if (res.status === 200) {
+            // setData(res.data.res);
+            console.log(res);
+            this.setState({ data: res.data.res, total: res.data.res.length });
+          } else {
+            console.log(res);
+          }
+        })
+        .catch((err) => console.error(err));
+    };
+
+    let { skip, take, data, filter } = this.state;
+    data = data.slice(skip, take + skip);
     const grid = (
       <Grid
-        data={data && data.slice(skip, take + skip)}
+        data={data && filterBy(data, filter)}
         sortable={true}
         pageable={true}
         filterable={true}
@@ -93,12 +121,12 @@ class Demo extends React.Component {
         take={take}
         total={data.length}
         pageSize={this.pageSize}
-        
+        filter={filter}
         onPageChange={this.pageChange}
         onFilterChange={(e) => {
-            this.setState({
-                filter: e.filter
-            });
+          this.setState({
+            filter: e.filter,
+          });
         }}
       >
         <GridToolbar>
@@ -118,56 +146,20 @@ class Demo extends React.Component {
             Export to Excel
           </button>
         </GridToolbar>
-        <Column
-          field="user_name"
-          title="Username"
-          filter="text"
-        />
-        <Column
-          field="request_by"
-          title="Request By"
-          filter="text"
-        />
-        <Column
-          field="modified_on"
-          title="Request Date"
-          filter={"date"}
-        />
-        <Column
-          field="first_name"
-          title="New Name"
-          filter="text"
-        />
+        <Column field="user_name" title="Username" filter="text" />
+        <Column field="request_by" title="Request By" filter="text" />
+        <Column field="modified_on" title="Request Date" filter={"date"} />
+        <Column field="first_name" title="New Name" filter="text" />
         <Column
           field="account_number"
           title="Old Account Number"
           filter={"numeric"}
         />
-        <Column
-          field="IFSC"
-          title="New IFSC Code"
-          filter="text"
-        />
-        <Column
-          field="account_type"
-          title="New Account Type"
-          filter="text"
-        />
-        <Column
-          field="status"
-          title="Status"
-          filter="text"
-        />
-        <Column
-          field="approved_by"
-          title="Approved By"
-          filter="text"
-        />
-        <Column
-          field="linux_added_on"
-          title="Approval Date"
-          filter={"date"}
-        />
+        <Column field="IFSC" title="New IFSC Code" filter="text" />
+        <Column field="account_type" title="New Account Type" filter="text" />
+        <Column field="status" title="Status" filter="text" />
+        <Column field="approved_by" title="Approved By" filter="text" />
+        <Column field="linux_added_on" title="Approval Date" filter={"date"} />
       </Grid>
     );
     return (
@@ -179,6 +171,7 @@ class Demo extends React.Component {
 
           <div className="m-5">
             <div className="my-10">
+<<<<<<< HEAD
               <Input
                 placeholder={"Search By User ID"}
                 defaultValue={""}
@@ -208,6 +201,39 @@ class Demo extends React.Component {
               >
                 Search
               </Button>
+=======
+              <Form
+                onSubmit={handleSearch}
+                render={(formRenderProps) => (
+                  <FormElement style={{ maxWidth: 450 }}>
+                    <Field
+                      placeholder={"Search By User ID"}
+                      name="user_id"
+                      component={Input}
+                    />
+                    <Field
+                      placeholder={"From Date"}
+                      name="from_date"
+                      component={DatePicker}
+                    />
+                    <Field
+                      placeholder={"To Date"}
+                      name="to_date"
+                      component={DatePicker}
+                    />
+                    <div className="k-form-buttons">
+                      <button
+                        type={"submit"}
+                        className="k-button"
+                        disabled={!formRenderProps.allowSubmit}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </FormElement>
+                )}
+              />
+>>>>>>> 4a0a72ae94ad7d9539b9f91447e40b8d8f9b8246
             </div>
             {grid}
             <ExcelExport
