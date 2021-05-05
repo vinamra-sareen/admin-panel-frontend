@@ -50,7 +50,6 @@ class Demo extends React.Component {
     getUserBankReportDetails()
       .then((res) => {
         if (res.status === 200) {
-          // setData(res.data.res);
           console.log(res);
           this.setState({ data: res.data.res, total: res.data.res.length });
         } else {
@@ -73,7 +72,6 @@ class Demo extends React.Component {
     getUserBankReportDetails(data)
       .then((res) => {
         if (res.status === 200) {
-          // setData(res.data.res);
           console.log(res);
           this.setState({ data: res.data.res, total: res.data.res.length });
         } else {
