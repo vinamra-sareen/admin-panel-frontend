@@ -13,3 +13,14 @@ export const getModules = async (module_id = null) => {
   });
 };
 
+export const getUserBankReportDetails = async (data) => {
+  const token = authenticationService.getToken();
+  return await api.get("/admin/get_bank_details_report", {
+   headers: {
+       'x-auth-token': token        
+   },
+   params: {
+     ...data
+   }
+ });
+};

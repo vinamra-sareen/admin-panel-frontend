@@ -12,7 +12,6 @@ import { authenticationService } from "./_services/authentication.service";
 import { getModules } from "./_services/admin";
 import Module from "./pages/dashboard/module";
 import UserBankDetailsReport from "./pages/dashboard/admin_compliance/user_bank_details_report";
-import Test from "./pages/test";
 
 class App extends Component {
   state = { currentUser: null, items: [] };
@@ -70,7 +69,6 @@ class App extends Component {
                 </Switch>
               </Dashboard>
             </PrivateRoute>
-            <Route path="/test" component={Test} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>
