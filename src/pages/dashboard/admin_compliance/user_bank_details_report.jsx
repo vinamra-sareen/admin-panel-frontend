@@ -27,17 +27,10 @@ class Demo extends React.Component {
     exporting: false,
     total: 0,
     take: 10,
-<<<<<<< HEAD
     filter: {},
     user_id:"",
     start_date: null,
     end_date: null
-=======
-    filter: {
-      logic: "and",
-      filters: [{ field: "user_name", operator: "contains", value: "" }],
-    },
->>>>>>> 4a0a72ae94ad7d9539b9f91447e40b8d8f9b8246
   };
 
   pageChange = (event) => {
@@ -55,7 +48,6 @@ class Demo extends React.Component {
   };
 
   componentDidMount() {
-<<<<<<< HEAD
     getUserBankReportDetails()
       .then((res) => {
         if (res.status === 200) {
@@ -79,10 +71,6 @@ class Demo extends React.Component {
     const {user_id, start_date, end_date}= this.state;
     let data = { user_id, from_date:start_date, to_date:end_date };
     getUserBankReportDetails(data)
-=======
-    let data = { user_id: "2703202" };
-    getUserBankReportDetails()
->>>>>>> 4a0a72ae94ad7d9539b9f91447e40b8d8f9b8246
       .then((res) => {
         if (res.status === 200) {
           console.log(res);
@@ -171,7 +159,6 @@ class Demo extends React.Component {
 
           <div className="m-5">
             <div className="my-10">
-<<<<<<< HEAD
               <Input
                 placeholder={"Search By User ID"}
                 defaultValue={""}
@@ -201,39 +188,6 @@ class Demo extends React.Component {
               >
                 Search
               </Button>
-=======
-              <Form
-                onSubmit={handleSearch}
-                render={(formRenderProps) => (
-                  <FormElement style={{ maxWidth: 450 }}>
-                    <Field
-                      placeholder={"Search By User ID"}
-                      name="user_id"
-                      component={Input}
-                    />
-                    <Field
-                      placeholder={"From Date"}
-                      name="from_date"
-                      component={DatePicker}
-                    />
-                    <Field
-                      placeholder={"To Date"}
-                      name="to_date"
-                      component={DatePicker}
-                    />
-                    <div className="k-form-buttons">
-                      <button
-                        type={"submit"}
-                        className="k-button"
-                        disabled={!formRenderProps.allowSubmit}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </FormElement>
-                )}
-              />
->>>>>>> 4a0a72ae94ad7d9539b9f91447e40b8d8f9b8246
             </div>
             {grid}
             <ExcelExport
