@@ -26,7 +26,10 @@ class Demo extends React.Component {
     exporting: false,
     total: 0,
     take: 10,
-    filter: {}
+    filter: {},
+    user_id:"",
+    start_date: null,
+    end_date: null
   };
 
   pageChange = (event) => {
@@ -44,7 +47,29 @@ class Demo extends React.Component {
   };
 
   componentDidMount() {
-    let data = { user_id: "2703202" };
+    getUserBankReportDetails()
+      .then((res) => {
+        if (res.status === 200) {
+          // setData(res.data.res);
+          console.log(res);
+          this.setState({ data: res.data.res, total: res.data.res.length });
+        } else {
+          console.log(res);
+        }
+      })
+      .catch((err) => console.error(err));
+  }
+
+  handleChange=(event)=>{
+    const {name, value} =event.target;
+    this.setState({
+      [name]: value
+    })
+  }
+
+  handleSearch=()=>{
+    const {user_id, start_date, end_date}= this.state;
+    let data = { user_id, from_date:start_date, to_date:end_date };
     getUserBankReportDetails(data)
       .then((res) => {
         if (res.status === 200) {
@@ -160,20 +185,23 @@ class Demo extends React.Component {
                 placeholder={"Search By User ID"}
                 defaultValue={""}
                 onChange={this.handleChange}
+                name="user_id"
               />
               <DatePicker
                 className="ml-2"
                 defaultValue={new Date()}
                 format="dd-MM-yyyy"
-                value={""}
+                value={this.state.start_date}
                 onChange={this.handleChange}
+                name="start_date"
               />
               <DatePicker
                 className="ml-2"
                 defaultValue={new Date()}
                 format="dd-MM-yyyy"
-                value={""}
+                value={this.state.end_date}
                 onChange={this.handleChange}
+                name="end_date"
               />
               <Button
                 className="ml-5"
