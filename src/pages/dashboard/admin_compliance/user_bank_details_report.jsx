@@ -27,10 +27,10 @@ class Demo extends React.Component {
     exporting: false,
     total: 0,
     take: 10,
-    filter: {
-      logic: "and",
-      filters: [{ field: "user_name", operator: "contains", value: "" }],
-    },
+    filter: {},
+    user_id:"",
+    start_date: null,
+    end_date: null
   };
 
   pageChange = (event) => {
@@ -48,10 +48,31 @@ class Demo extends React.Component {
   };
 
   componentDidMount() {
-    let data = { user_id: "2703202" };
     getUserBankReportDetails()
       .then((res) => {
         if (res.status === 200) {
+          this.setState({ data: res.data.res, total: res.data.res.length });
+        } else {
+          console.log(res);
+        }
+      })
+      .catch((err) => console.error(err));
+  }
+
+  handleChange=(event)=>{
+    const {name, value} =event.target;
+    this.setState({
+      [name]: value
+    })
+  }
+
+  handleSearch=()=>{
+    const {user_id, start_date, end_date}= this.state;
+    let data = { user_id, from_date:start_date, to_date:end_date };
+    getUserBankReportDetails(data)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
           this.setState({ data: res.data.res, total: res.data.res.length });
         } else {
           console.log(res);
@@ -136,37 +157,35 @@ class Demo extends React.Component {
 
           <div className="m-5">
             <div className="my-10">
-              <Form
-                onSubmit={handleSearch}
-                render={(formRenderProps) => (
-                  <FormElement style={{ maxWidth: 450 }}>
-                    <Field
-                      placeholder={"Search By User ID"}
-                      name="user_id"
-                      component={Input}
-                    />
-                    <Field
-                      placeholder={"From Date"}
-                      name="from_date"
-                      component={DatePicker}
-                    />
-                    <Field
-                      placeholder={"To Date"}
-                      name="to_date"
-                      component={DatePicker}
-                    />
-                    <div className="k-form-buttons">
-                      <button
-                        type={"submit"}
-                        className="k-button"
-                        disabled={!formRenderProps.allowSubmit}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </FormElement>
-                )}
+              <Input
+                placeholder={"Search By User ID"}
+                defaultValue={""}
+                onChange={this.handleChange}
+                name="user_id"
               />
+              <DatePicker
+                className="ml-2"
+                defaultValue={new Date()}
+                format="dd-MM-yyyy"
+                value={this.state.start_date}
+                onChange={this.handleChange}
+                name="start_date"
+              />
+              <DatePicker
+                className="ml-2"
+                defaultValue={new Date()}
+                format="dd-MM-yyyy"
+                value={this.state.end_date}
+                onChange={this.handleChange}
+                name="end_date"
+              />
+              <Button
+                className="ml-5"
+                primary={true}
+                onClick={this.handleSearch}
+              >
+                Search
+              </Button>
             </div>
             {grid}
             <ExcelExport
