@@ -137,7 +137,7 @@ class Demo extends React.Component {
         <Column field="user_name" title="Username" filter="text" />
         <Column field="requested_by" title="Request By" filter="text" />
         <Column field="modified_on" title="Request Date" filter={"date"} />
-        <Column field="first_name" title="Name" filter="text" />
+        <Column field="first_name" title="First Name" filter="text" />
         <Column field="account_number" title="Account No." filter={"numeric"} />
         <Column field="IFSC" title="IFSC Code" filter="text" />
         <Column field="account_type" title="Account Type" filter="text" />
