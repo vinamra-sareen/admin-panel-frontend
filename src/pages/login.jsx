@@ -60,10 +60,9 @@ const Login = () => {
                 <Field
                   id={"user_name"}
                   name={"user_name"}
-                  label={"Username/Email"}
+                  label={"Username"}
                   component={FloatingInput}
                   type="text"
-                  hint="Please enter your username/email address"
                 />
                 <Field
                   id={"password"}
