@@ -12,6 +12,7 @@ const Login = () => {
   let history = useHistory();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleLogin = (dataItem) => {
     setLoading(true);
@@ -23,12 +24,21 @@ const Login = () => {
             setLoading(false);
             history.push("/admin");
           }, 500);
+        } else if(res.status === 201) {
+          setMessage("Invalid Credentials");
+          setLoading(false);
+          setError(true);
         } else {
+          setMessage(res.data.message);
           setLoading(false);
           setError(true);
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setMessage("Network Error");
+        setLoading(false);
+        setError(true);
+      });
   };
 
   return (
@@ -82,7 +92,7 @@ const Login = () => {
               closable={true}
               onClose={() => setError(false)}
             >
-              <span>Invalid Credentials ...</span>
+              <span>{message}</span>
             </Notification>
           )}
         </Fade>

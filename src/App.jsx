@@ -13,6 +13,8 @@ import { routes } from "./routes";
 import Module from "./pages/dashboard/module"
 import UserBankDetailsReport from "./pages/dashboard/admin_compliance/user_bank_details_report"
 
+const Welcome = () => <h1>Testing</h1>
+
 class App extends Component {
   
   state = { 
@@ -38,10 +40,10 @@ class App extends Component {
             <PrivateRoute path="/admin">
               <Dashboard>
                 <Switch>
-                  {/* <PrivateRoute
-                    path={"/admin/business_report"}
-                    component={Module}
-                  /> */}
+                <PrivateRoute
+                    path={"/admin/food"}
+                    component={Welcome}
+                  />
                   <PrivateRoute
                     path={"/admin/admin_compliance/getBankDetailReport"}
                     component={UserBankDetailsReport}
