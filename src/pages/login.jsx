@@ -10,6 +10,9 @@ import FloatingInput from "../components/form/FloatingInput";
 
 const Login = () => {
   let history = useHistory();
+  if(authenticationService.currentUserValue){
+    history.push('/');
+  }
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState('');
