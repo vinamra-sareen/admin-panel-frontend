@@ -25,7 +25,7 @@ const Login = () => {
         if (res.status === 200) {
           setTimeout(() => {
             setLoading(false);
-            history.push("/admin");
+            history.push("/");
           }, 500);
         } else if(res.status === 201) {
           setMessage("Invalid Credentials");
