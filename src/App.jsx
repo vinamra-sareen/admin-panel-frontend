@@ -7,19 +7,18 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import { PrivateRoute } from "./components/PrivateRoute";
+import Unauthorized from "./components/base/Unauthorized";
 import NotFound from "./components/base/NotFound";
 import { authenticationService } from "./_services/authentication.service";
-import { routes } from "./routes";
-import Module from "./pages/dashboard/module"
-import UserBankDetailsReport from "./pages/dashboard/admin_compliance/user_bank_details_report"
+import Module from "./pages/dashboard/module";
+import UserBankDetailsReport from "./pages/dashboard/admin_compliance/user_bank_details_report";
 
-const Welcome = () => <h1>Testing</h1>
+// const Welcome = () => <h1>Testing</h1>
 
 class App extends Component {
-  
-  state = { 
-    currentUser: null, 
-    items: [] 
+  state = {
+    currentUser: null,
+    items: [],
   };
 
   componentDidMount() {
@@ -40,10 +39,6 @@ class App extends Component {
             <PrivateRoute path="/admin">
               <Dashboard>
                 <Switch>
-                <PrivateRoute
-                    path={"/admin/food"}
-                    component={Welcome}
-                  />
                   <PrivateRoute
                     path={"/admin/admin_compliance/getBankDetailReport"}
                     component={UserBankDetailsReport}
@@ -55,6 +50,7 @@ class App extends Component {
                 </Switch>
               </Dashboard>
             </PrivateRoute>
+            <Route exact path="/unauthorized" component={Unauthorized} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>

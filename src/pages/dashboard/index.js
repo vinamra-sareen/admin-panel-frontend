@@ -21,7 +21,7 @@ let items = [
 ];
 
 class DrawerRouterContainer extends React.Component {
-  state = { expanded: true, items: [] };
+  state = { expanded: true, items: [], error: false };
 
   handleClick = () => {
     this.setState((e) => ({ expanded: !e.expanded }));
@@ -46,6 +46,7 @@ class DrawerRouterContainer extends React.Component {
   componentDidMount() {
     getModules()
       .then((res) => {
+        console.log(res.status);
         if (res.status === 200) {
           res.data.modules.map((module) => {
             items.push({
@@ -54,21 +55,26 @@ class DrawerRouterContainer extends React.Component {
             });
           });
           this.setState({ items });
-        } else {
-          console.error("Oops ... Something went wrong");
-        }
+        } 
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.setState({ error: true });
+      });
   }
 
   render() {
+    console.log('error: ', this.state.error)
+    if(this.state.error){
+      return <Redirect to="/unauthorized" />;
+    }
+
     // let selected = this.setSelectedItem(this.props.location.pathname);
     const token = authenticationService.getToken();
     const user = authenticationService.currentUser;
     console.log((!token || user === null));
     if ((!token || user === null)) {
       return <Redirect to="/login" />;
-    }
+    } 
     return (
       <>
         <div className="container mt-1 w-full hidden sm:block">
