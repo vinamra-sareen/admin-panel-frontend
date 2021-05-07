@@ -99,9 +99,10 @@ class Demo extends React.Component {
 
   render() {
     let { skip, take, data, filter, loading } = this.state;
+    data = filterBy(data, filter);
     const grid = (
       <Grid
-        data={data && filterBy(data.slice(skip, take + skip), filter)}
+        data={data && data.slice(skip, take + skip)}
         sortable={true}
         pageable={true}
         filterable={true}
@@ -136,7 +137,7 @@ class Demo extends React.Component {
         </GridToolbar>
         <Column field="user_name" title="Username" filter="text" />
         <Column field="requested_by" title="Request By" filter="text" />
-        <Column field="modified_on" title="Request Date" filter={"date"} />
+        <Column field="modified_on" title="Request Date" filter="date" format="{0:D}" />
         <Column field="first_name" title="First Name" filter="text" />
         <Column field="account_number" title="Account No." filter={"numeric"} />
         <Column field="IFSC" title="IFSC Code" filter="text" />
